@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Instituciones educativas</title>
+  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+  </head>
+  <body>
+      <h1>Instituciones Educativas de Raw</h1>
+      <p id="mensajeFinal">
+      </p>
+      <button type="submit" id="obtenerInformacion">Obtener información</button>
+      <button type="submit" id="limpiarInformacion">Limpiar información</button>
+  </body>
+    <script>
+      $(document).ready(function () {
+        var url =
+          "https://raw.githubusercontent.com/PlataformasWeb-P-AA2025/clase03-1bim-augusto20052008/main/ejercicio/data/data_instituciones.json";
+
+        $("#obtenerInformacion").click(function () {
+          $.ajax({
+            dataType: "json",
+            url: url,
+          }).then(function (data) {
+            let tabla = `<table>`;
+            for (var i = 0; i < data.length; i++) {
+              let inst = data[i];
+              tabla += `
+                <tr>
+                  <td>
+                    <div class="ficha">
+                      <b>Nombre:</b> ${inst["Nombre-Educativa"]}<br>
+                      <b>AMIE:</b> ${inst["AMIE"]}<br>
+                      <b>Provincia:</b> ${inst["Provincia"]}<br>
+                      <b>Cantón:</b> ${inst["Canton"]}<br>
+                      <b>Parroquia:</b> ${inst["Parroquia"]}<br>
+                      <b>Zona:</b> ${inst["ZonaAdministrativa"]}<br>
+                      <b>Distrito:</b> ${inst["CodigoDistrito"]}<br>
+                      <b>Sostenimiento:</b> ${inst["Sostenimiento"]}<br>
+                      <b>Régimen:</b> ${inst["RegimenEscolar"]}<br>
+                      <b>Modalidad:</b> ${inst["Modalidad"]}<br>
+                      <b>Jornada:</b> ${inst["Jornada"]}<br>
+                      <b>Nivel:</b> ${inst["Nivel"]}<br>
+                      <b>Etnia:</b> ${inst["Etnia"]}<br>
+                      <b># Estudiantes:</b> ${inst["Numeroestudiantes"]}<br>
+                      <b># Docentes:</b> ${inst["Numerodocentes"]}<br>
+                      <b>Estado:</b> ${inst["Estado"]}
+                    </div>
+                  </td>
+                </tr>
+              `;
+            }
+            tabla += `</table>`;
+            $("#mensajeFinal").html(tabla);
+          });
+        });
+
+        $("#limpiarInformacion").click(function () {
+          $("#mensajeFinal").empty();
+        });
+      });
+    </script>
+  </body>
+</html>
